@@ -25,9 +25,11 @@
 
     <ion-pane>
       <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
+        <h1 class="title">Nashville Weather</h1>
       </ion-header-bar>
-      <ion-content>
+      <ion-content ng-controller="weatherCtrl as weather">
+        <h1 class="temperature">{{weather.temp}}°F<span class="summary">{{weather.summary}}</span></h1>
+        <img class="weather-icon" src="img/{{weather.icon}}.svg" width="200px" height="200px">
       </ion-content>
     </ion-pane>
   </body>
