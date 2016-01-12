@@ -30,6 +30,7 @@
       <ion-content ng-controller="weatherCtrl as weather">
         <h1 class="temperature">{{weather.temp}}°F<span class="summary">{{weather.summary}}</span></h1>
         <img class="weather-icon" src="img/{{weather.icon}}.svg" width="200px" height="200px">
+        <button ng-click="weather.reload()" class="button button-full button-stable">Reload</button>
       </ion-content>
     </ion-pane>
   </body>
