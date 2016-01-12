@@ -42,19 +42,19 @@ angular.module('starter', ['ionic'])
         });
       });
     }
-
-  navigator.geolocation.getCurrentPosition(function (geopos) {
-    var lat = geopos.coords.latitude;
-    var long = geopos.coords.longitude;
-    var apikey = "4bf87414e256897cac4a0724afcda091";
-    var url = "/api/forecast/" + apikey + "/" + lat + "," + long;
-    $http.get(url).then(function (res) {
-      console.log(res);
-      weather.temp = Math.round(res.data.currently.temperature);
-      weather.summary = res.data.currently.summary;
-      weather.icon = res.data.currently.icon;
-    });
-  });
+    weather.reload();
+  // navigator.geolocation.getCurrentPosition(function (geopos) {
+  //   var lat = geopos.coords.latitude;
+  //   var long = geopos.coords.longitude;
+  //   var apikey = "4bf87414e256897cac4a0724afcda091";
+  //   var url = "/api/forecast/" + apikey + "/" + lat + "," + long;
+  //   $http.get(url).then(function (res) {
+  //     console.log(res);
+  //     weather.temp = Math.round(res.data.currently.temperature);
+  //     weather.summary = res.data.currently.summary;
+  //     weather.icon = res.data.currently.icon;
+  //   });
+  // });
 
 //https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE
 
