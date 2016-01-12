@@ -26,6 +26,8 @@ angular.module('starter', ['ionic'])
 .controller('weatherCtrl', function ($http) {
     var weather = this;
     weather.temp = "--";
+    weather.summary = "Loading ..."
+    weather.icon = "download"
 
   navigator.geolocation.getCurrentPosition(function (geopos) {
     var lat = geopos.coords.latitude;
