@@ -6,10 +6,27 @@
 
 .temperature {
 	text-align: center;
-	margin-top: 1em !important;
+/*	margin-top: 1em !important;*/
 }
 
 .summary {
 	font-size: .5em;
 	display: block;
+}
+
+.location {
+	text-align: center;
+}
+
+.bold {
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+ul {
+	list-style-type: none;
+}
+
+li {
+	text-align: center;
 }

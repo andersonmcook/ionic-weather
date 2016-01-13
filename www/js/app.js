@@ -28,20 +28,42 @@ angular.module('starter', ['ionic'])
     weather.temp = "--";
     weather.summary = "Loading ...";
     weather.icon = "download";
-    weather.reload = function () {
+    // weather.reload = function () {
+    //   navigator.geolocation.getCurrentPosition(function (geopos) {
+    //     var lat = geopos.coords.latitude;
+    //     var long = geopos.coords.longitude;
+    //     var apikey = "4bf87414e256897cac4a0724afcda091";
+    //     var url = "/api/forecast/" + apikey + "/" + lat + "," + long;
+    //     $http.get(url).then(function (res) {
+    //       console.log(res);
+    //       weather.temp = Math.round(res.data.currently.temperature);
+    //       weather.summary = res.data.currently.summary;
+    //       weather.icon = res.data.currently.icon;
+    //     });
+    //   });
+
+//http://api.wunderground.com/api/9b803ddf48450195/geolookup/conditions/forecast/q/37211.json
+    // }
+
+        weather.reload = function () {
       navigator.geolocation.getCurrentPosition(function (geopos) {
         var lat = geopos.coords.latitude;
         var long = geopos.coords.longitude;
-        var apikey = "4bf87414e256897cac4a0724afcda091";
-        var url = "/api/forecast/" + apikey + "/" + lat + "," + long;
+        var apikey = "534ef4fb0d0af167";
+        var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/" + lat + "," + long + ".json";
         $http.get(url).then(function (res) {
           console.log(res);
-          weather.temp = Math.round(res.data.currently.temperature);
-          weather.summary = res.data.currently.summary;
-          weather.icon = res.data.currently.icon;
+          weather.temp = Math.round(res.data.current_observation.temp_f);
+          weather.summary = res.data.current_observation.weather;
+          weather.icon = res.data.current_observation.icon_url;
+          weather.city = res.data.location.city + ",";
+          weather.state = res.data.location.state;
+          weather.forecasts = res.data.forecast.simpleforecast.forecastday;
+          console.log(weather.forecast);
         });
       });
     }
+
     weather.reload();
   // navigator.geolocation.getCurrentPosition(function (geopos) {
   //   var lat = geopos.coords.latitude;
