@@ -39,6 +39,10 @@
         <ul>
           <li ng-repeat="forecast in weather.forecasts"><span class="bold">{{forecast.date.weekday_short}}</span> High: {{forecast.high.fahrenheit}}°F, Low: {{forecast.low.fahrenheit}}°F</li>
         </ul>
+        <hr>
+        <ul>
+          <li ng-repeat="(key, value) in weather.history" ng-click="weather.recall(value)"><button class="button button-full button-stable">{{key}}</button></li>
+        </ul>
         <!-- <button ng-click="weather.reload()" class="button button-full button-stable">Reload</button> -->
       </ion-content>
     </ion-pane>

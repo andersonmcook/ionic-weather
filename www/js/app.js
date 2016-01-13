@@ -30,6 +30,9 @@ angular.module('starter', ['ionic'])
 
   var tempLat, tempLon;
 
+  weather.history = JSON.parse(localStorage.getItem("searchHistory"));
+  console.log("weather.history", weather.history);
+
 // set variables based on call to api
   function weatherData (res) {
     if (res.data.response.hasOwnProperty("error")) {
@@ -60,14 +63,30 @@ angular.module('starter', ['ionic'])
       return res;
       }).then(function (res) {
 // saves searches to history
-      console.log(res.data.location.city + ", " + res.data.location.state);
-      var history = JSON.parse(localStorage.getItem("searchHistory")) || [];
-      if (history.indexOf(res.data.current_observation.station_id) === -1) {
-        history.push(res.data.current_observation.station_id);
+      var key = res.data.location.city + ", " + res.data.location.state;
+      var value = res.data.current_observation.station_id;
+      var history = JSON.parse(localStorage.getItem("searchHistory")) || {};
+      console.log("history", history);
+      if (history.hasOwnProperty(key) === false) {
+        history[key] = value;
         localStorage.setItem('searchHistory', JSON.stringify(history));
       }
+      // var history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+      // if (history.indexOf(res.data.current_observation.station_id) === -1) {
+      //   history.push(res.data.current_observation.station_id);
+      //   localStorage.setItem('searchHistory', JSON.stringify(history));
+      // }
     });
   };
+
+  weather.recall = function (station) {
+    var apikey = "534ef4fb0d0af167";
+    var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/pws:" + station + ".json";
+    console.log("station", station);
+    $http.get(url).then(function (res) {
+      weatherData(res);
+  });
+};
 
 // autoip call then use non-exact latitude and longitude
   $http.get("http://api.wunderground.com/api/534ef4fb0d0af167/geolookup/q/autoip.json").then(function (res) {
