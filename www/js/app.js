@@ -71,6 +71,7 @@ angular.module('starter', ['ionic'])
         history[key] = value;
         localStorage.setItem('searchHistory', JSON.stringify(history));
       }
+      // //array version
       // var history = JSON.parse(localStorage.getItem("searchHistory")) || [];
       // if (history.indexOf(res.data.current_observation.station_id) === -1) {
       //   history.push(res.data.current_observation.station_id);
