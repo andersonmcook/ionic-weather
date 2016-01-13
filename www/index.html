@@ -24,10 +24,14 @@
   <body ng-app="starter">
 
     <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Weather</h1>
-      </ion-header-bar>
       <ion-content ng-controller="weatherCtrl as weather">
+        <form ng-submit="weather.search()" class="bar bar-header item-input-inset">
+          <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input ng-model="weather.searchQuery" type="search" placeholder="Search by City, State or ZIP">
+          </label>
+          <button ng-click="weather.search()" class="button button-clear">Search</button>
+        </form>
         <h3 class="location">{{weather.city}} {{weather.state}}</h3>
         <h1 class="temperature">{{weather.temp}}°F<span class="summary">{{weather.summary}}</span></h1>
         <img class="weather-icon" src="{{weather.icon}}">

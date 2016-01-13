@@ -30,6 +30,23 @@ angular.module('starter', ['ionic'])
 
     var tempLat, tempLon;
 
+    weather.search = function () {
+      var apikey = "534ef4fb0d0af167";
+      var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/" + weather.searchQuery + ".json";
+      console.log("url", url);
+      $http.get(url).then(function (res) {
+          console.log("weather", res);
+          weather.temp = Math.round(res.data.current_observation.temp_f);
+          weather.summary = res.data.current_observation.weather;
+          weather.icon = res.data.current_observation.icon_url;
+          weather.city = res.data.location.city + ",";
+          weather.state = res.data.location.state;
+          weather.forecasts = res.data.forecast.simpleforecast.forecastday;
+          console.log(weather.forecasts);
+        });
+
+    };
+
     $http.get("http://api.wunderground.com/api/534ef4fb0d0af167/geolookup/q/autoip.json").then(function (res) {
       console.log("autoip", res);
       tempLat = res.data.location.lat;
