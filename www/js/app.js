@@ -32,21 +32,29 @@ angular.module('starter', ['ionic'])
 
 // set variables based on call to api
   function weatherData (res) {
-    console.log("weather", res);
-    weather.temp = Math.round(res.data.current_observation.temp_f);
-    weather.summary = res.data.current_observation.weather;
-    weather.icon = res.data.current_observation.icon_url;
-    weather.city = res.data.location.city + ",";
-    weather.state = res.data.location.state;
-    weather.forecasts = res.data.forecast.simpleforecast.forecastday;
-    console.log(weather.forecasts);
+    if (res.data.response.hasOwnProperty("error")) {
+      weather.errorMessage = res.data.response.error.description;
+    } else if (typeof res.data.response.results === "object") {
+      weather.errorMessage = "Be more specific";
+    } else {
+      console.log("results", res);
+      console.log("forecasts", weather.forecasts);
+      weather.errorMessage = "";
+      weather.temp = Math.round(res.data.current_observation.temp_f);
+      weather.summary = res.data.current_observation.weather;
+      weather.icon = res.data.current_observation.icon_url;
+      weather.city = res.data.location.city + ",";
+      weather.state = res.data.location.state;
+      weather.forecasts = res.data.forecast.simpleforecast.forecastday;
+      weather.searchQuery = "";
+    }
   };
 
 // search functionality
   weather.search = function () {
     var apikey = "534ef4fb0d0af167";
     var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/" + weather.searchQuery + ".json";
-    console.log("url", url);
+    // console.log("url", url);
     $http.get(url).then(function (res) {
         weatherData(res);
       });

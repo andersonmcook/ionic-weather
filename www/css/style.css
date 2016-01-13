@@ -23,6 +23,11 @@
 	text-transform: uppercase;
 }
 
+.alert {
+	color: red;
+	text-align: center;
+}
+
 ul {
 	list-style-type: none;
 }
