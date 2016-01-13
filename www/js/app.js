@@ -38,7 +38,6 @@ angular.module('starter', ['ionic'])
       weather.errorMessage = "Be more specific";
     } else {
       console.log("results", res);
-      console.log("forecasts", weather.forecasts);
       weather.errorMessage = "";
       weather.temp = Math.round(res.data.current_observation.temp_f);
       weather.summary = res.data.current_observation.weather;
@@ -46,6 +45,7 @@ angular.module('starter', ['ionic'])
       weather.city = res.data.location.city + ",";
       weather.state = res.data.location.state;
       weather.forecasts = res.data.forecast.simpleforecast.forecastday;
+      console.log("forecasts", weather.forecasts);
       weather.searchQuery = "";
     }
   };
@@ -56,9 +56,17 @@ angular.module('starter', ['ionic'])
     var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/" + weather.searchQuery + ".json";
     // console.log("url", url);
     $http.get(url).then(function (res) {
-        weatherData(res);
-      });
-
+      weatherData(res);
+      return res;
+      }).then(function (res) {
+// saves searches to history
+      console.log(res.data.location.city + ", " + res.data.location.state);
+      var history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+      if (history.indexOf(res.data.current_observation.station_id) === -1) {
+        history.push(res.data.current_observation.station_id);
+        localStorage.setItem('searchHistory', JSON.stringify(history));
+      }
+    });
   };
 
 // autoip call then use non-exact latitude and longitude
