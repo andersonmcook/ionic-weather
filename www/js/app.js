@@ -24,69 +24,46 @@ angular.module('starter', ['ionic'])
 })
 
 .controller('weatherCtrl', function ($http) {
-    var weather = this;
-    weather.temp = "--";
-    weather.summary = "Loading ...";
+  var weather = this;
+  weather.temp = "--";
+  weather.summary = "Loading ...";
 
-    var tempLat, tempLon;
+  var tempLat, tempLon;
 
-    weather.search = function () {
-      var apikey = "534ef4fb0d0af167";
-      var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/" + weather.searchQuery + ".json";
-      console.log("url", url);
-      $http.get(url).then(function (res) {
-          console.log("weather", res);
-          weather.temp = Math.round(res.data.current_observation.temp_f);
-          weather.summary = res.data.current_observation.weather;
-          weather.icon = res.data.current_observation.icon_url;
-          weather.city = res.data.location.city + ",";
-          weather.state = res.data.location.state;
-          weather.forecasts = res.data.forecast.simpleforecast.forecastday;
-          console.log(weather.forecasts);
-        });
+// set variables based on call to api
+  function weatherData (res) {
+    console.log("weather", res);
+    weather.temp = Math.round(res.data.current_observation.temp_f);
+    weather.summary = res.data.current_observation.weather;
+    weather.icon = res.data.current_observation.icon_url;
+    weather.city = res.data.location.city + ",";
+    weather.state = res.data.location.state;
+    weather.forecasts = res.data.forecast.simpleforecast.forecastday;
+    console.log(weather.forecasts);
+  };
 
-    };
+// search functionality
+  weather.search = function () {
+    var apikey = "534ef4fb0d0af167";
+    var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/" + weather.searchQuery + ".json";
+    console.log("url", url);
+    $http.get(url).then(function (res) {
+        weatherData(res);
+      });
 
-    $http.get("http://api.wunderground.com/api/534ef4fb0d0af167/geolookup/q/autoip.json").then(function (res) {
-      console.log("autoip", res);
-      tempLat = res.data.location.lat;
-      tempLon = res.data.location.lon;
-      var apikey = "534ef4fb0d0af167";
-      var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/" + tempLat + "," + tempLon + ".json";
-      $http.get(url).then(function (res) {
-          console.log("weather", res);
-          weather.temp = Math.round(res.data.current_observation.temp_f);
-          weather.summary = res.data.current_observation.weather;
-          weather.icon = res.data.current_observation.icon_url;
-          weather.city = res.data.location.city + ",";
-          weather.state = res.data.location.state;
-          weather.forecasts = res.data.forecast.simpleforecast.forecastday;
-          console.log(weather.forecasts);
-        });
-    });
+  };
 
-    // weather.reload = function () {
-    //   navigator.geolocation.getCurrentPosition(function (geopos) {
-    //     var lat = geopos.coords.latitude;
-    //     var long = geopos.coords.longitude;
-    //     var apikey = "534ef4fb0d0af167";
-    //     var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/" + lat + "," + long + ".json";
-    //     $http.get(url).then(function (res) {
-    //       console.log(res);
-    //       weather.temp = Math.round(res.data.current_observation.temp_f);
-    //       weather.summary = res.data.current_observation.weather;
-    //       weather.icon = res.data.current_observation.icon_url;
-    //       weather.city = res.data.location.city + ",";
-    //       weather.state = res.data.location.state;
-    //       weather.forecasts = res.data.forecast.simpleforecast.forecastday;
-    //       console.log(weather.forecast);
-    //     });
-    //   });
-    // }
-
-    // weather.reload();
-
-
+// autoip call then use non-exact latitude and longitude
+  $http.get("http://api.wunderground.com/api/534ef4fb0d0af167/geolookup/q/autoip.json").then(function (res) {
+    console.log("autoip", res);
+    tempLat = res.data.location.lat;
+    tempLon = res.data.location.lon;
+    var apikey = "534ef4fb0d0af167";
+    var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/" + tempLat + "," + tempLon + ".json";
+    $http.get(url).then(function (res) {
+        weatherData(res);
+      });
+  });
 });
 
 // .config(function($stateProvider, $urlRouterProvider) {
