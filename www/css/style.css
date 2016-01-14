@@ -21,6 +21,8 @@
 .bold {
 	font-weight: bold;
 	text-transform: uppercase;
+	text-align: center;
+	margin: 0;
 }
 
 .alert {
@@ -34,4 +36,9 @@ ul {
 
 li {
 	text-align: center;
+}
+
+.col p {
+	text-align: center;
+	margin: 0;
 }
