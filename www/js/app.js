@@ -28,7 +28,7 @@ angular.module('starter', ['ionic'])
   weather.temp = "--";
   weather.summary = "Loading ...";
 
-  var tempLat, tempLon;
+  var apikey = "534ef4fb0d0af167";
 
   weather.history = JSON.parse(localStorage.getItem("searchHistory"));
   console.log("weather.history", weather.history);
@@ -55,7 +55,7 @@ angular.module('starter', ['ionic'])
 
 // search functionality
   weather.search = function () {
-    var apikey = "534ef4fb0d0af167";
+    // var apikey = "534ef4fb0d0af167";
     var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/" + weather.searchQuery + ".json";
     // console.log("url", url);
     $http.get(url).then(function (res) {
@@ -81,7 +81,7 @@ angular.module('starter', ['ionic'])
   };
 
   weather.recall = function (station) {
-    var apikey = "534ef4fb0d0af167";
+    // var apikey = "534ef4fb0d0af167";
     var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/pws:" + station + ".json";
     console.log("station", station);
     $http.get(url).then(function (res) {
@@ -92,9 +92,9 @@ angular.module('starter', ['ionic'])
 // autoip call then use non-exact latitude and longitude
   $http.get("http://api.wunderground.com/api/534ef4fb0d0af167/geolookup/q/autoip.json").then(function (res) {
     console.log("autoip", res);
-    tempLat = res.data.location.lat;
-    tempLon = res.data.location.lon;
-    var apikey = "534ef4fb0d0af167";
+    var tempLat = res.data.location.lat;
+    var tempLon = res.data.location.lon;
+    // var apikey = "534ef4fb0d0af167";
     var url = "http://api.wunderground.com/api/" + apikey + "/geolookup/conditions/forecast/q/" + tempLat + "," + tempLon + ".json";
     $http.get(url).then(function (res) {
         weatherData(res);
