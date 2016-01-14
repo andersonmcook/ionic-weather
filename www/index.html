@@ -23,7 +23,7 @@
   </head>
   <body ng-app="starter">
 
-    <ion-pane>
+    <ion-pane ng-cloak>
       <ion-content ng-controller="weatherCtrl as weather">
         <form ng-submit="weather.search()" class="bar bar-header item-input-inset">
           <label class="item-input-wrapper">
@@ -35,14 +35,14 @@
         <h5 class="alert">{{weather.errorMessage}}</h5>
         <h3 class="location">{{weather.city}} {{weather.state}}</h3>
         <h1 class="temperature">{{weather.temp}}°F<span class="summary">{{weather.summary}}</span></h1>
-        <img class="weather-icon" src="{{weather.icon}}">
+        <img class="weather-icon" ng-src="{{weather.icon}}">
         <!-- <ul>
           <li ng-repeat="forecast in weather.forecasts"><span class="bold">{{forecast.date.weekday_short}}</span> High: {{forecast.high.fahrenheit}}°F<img src="{{forecast.icon_url}}" height="16px">Low: {{forecast.low.fahrenheit}}°F</li>
         </ul> -->
         <div class="row">
           <div ng-repeat="forecast in weather.forecasts" class="col">
             <p class="bold">{{forecast.date.weekday_short}}</p>
-            <img class="weather-icon" src="{{forecast.icon_url}}">
+            <img class="weather-icon" ng-src="{{forecast.icon_url}}">
             <p>High: {{forecast.high.fahrenheit}}°F</p>
             <p class="lowtemp">Low: {{forecast.low.fahrenheit}}°F</p>
           </div>

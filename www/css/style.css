@@ -42,3 +42,7 @@ li {
 	text-align: center;
 	margin: 0;
 }
+
+.col img {
+	height: 50%
+}
